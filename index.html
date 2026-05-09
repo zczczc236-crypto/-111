@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나만의 웹소설 플랫폼</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- 상단 광고창 영역 -->
+        <header class="top-ad">
+            <p>광고 창</p>
+        </header>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <main id="main-content">
+            
+            <!-- 1. 홈 화면 -->
+            <section id="view-home" class="view active">
+                <div class="ranking-section">
+                    <h3>랭킹</h3>
+                    <div class="ranking-cards">
+                        <div class="card">1위</div>
+                        <div class="card">2위</div>
+                        <div class="card">3위</div>
+                    </div>
+                </div>
+                <div class="list-section">
+                    <h3>여러 작품 창 <span class="search-icon">🔍</span></h3>
+                    <ul class="novel-list">
+                        <li>작품 A - 판타지</li>
+                        <li>작품 B - 로맨스</li>
+                        <li>작품 C - 무협</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 2. 서재 화면 -->
+            <section id="view-library" class="view">
+                <div class="library-item">
+                    <div class="cover"></div>
+                    <div class="info">
+                        <p>며칠 전 읽은 소설</p>
+                        <button class="btn-small">처음</button>
+                        <button class="btn-small">이어서</button>
+                    </div>
+                </div>
+                <div class="library-item">
+                    <div class="cover"></div>
+                    <div class="info">
+                        <p>1일 전 읽은 소설</p>
+                        <button class="btn-small">처음</button>
+                        <button class="btn-small">이어서</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. 글 메뉴 화면 -->
+            <section id="view-write-menu" class="view">
+                <div class="write-menu-buttons">
+                    <button class="btn-large" onclick="switchView('view-editor')">글작성</button>
+                    <button class="btn-large">완결작 확인</button>
+                    <button class="btn-large full-width">이벤트 내역</button>
+                </div>
+            </section>
+
+            <!-- 4. 글 작성 에디터 화면 (숨겨져 있다가 글작성 누르면 나옴) -->
+            <section id="view-editor" class="view">
+                <div class="editor-toolbar">
+                    <button><b>B</b></button>
+                    <button><i>I</i></button>
+                    <button><u>U</u></button>
+                    <button><s>S</s></button>
+                    <button>색</button>
+                </div>
+                <div class="editor-title-row">
+                    <input type="text" placeholder="제목:" class="title-input">
+                    <button class="btn-submit">등록</button>
+                </div>
+                <textarea class="editor-textarea" placeholder="글작성 공간..."></textarea>
+            </section>
+
+        </main>
+
+        <!-- 하단 네비게이션 바 -->
+        <nav class="bottom-nav">
+            <button onclick="switchView('view-home')">홈</button>
+            <button onclick="switchView('view-library')">서재</button>
+            <button onclick="switchView('view-write-menu')">글</button>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
