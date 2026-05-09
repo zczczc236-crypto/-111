@@ -3,101 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나만의 웹소설 플랫폼</title>
+    <title>WebNovel Project</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 </head>
 <body>
     <div id="app-container">
-        <!-- 상단 광고창 영역 -->
-        <header class="top-ad">
-            <p>광고 창</p>
+        <!-- 6.jpg 참고: 상단 광고 및 헤더 -->
+        <header class="main-header">
+            <div class="ad-banner">광고 영역</div>
+            <nav class="pc-nav">
+                <button onclick="showView('home')">홈</button>
+                <button onclick="showView('library')">서재</button>
+                <button onclick="showView('write-menu')">연재하기</button>
+                <button id="auth-btn" onclick="handleAuth()">로그인</button>
+            </nav>
         </header>
 
-        <!-- 네비게이션 바 (PC에선 상단, 모바일에선 하단) -->
-        <nav id="main-nav" class="nav-bar">
-            <button onclick="switchView('view-home')" class="nav-btn">홈</button>
-            <button onclick="switchView('view-library')" class="nav-btn">서재</button>
-            <button onclick="switchView('view-write-menu')" class="nav-btn">글</button>
-        </nav>
-
-        <!-- 메인 콘텐츠 영역 -->
-        <main id="main-content">
-            
-            <!-- 1. 홈 화면 -->
-            <section id="view-home" class="view active">
-                <div class="ranking-section">
-                    <h3>랭킹</h3>
-                    <div class="ranking-cards">
-                        <div class="card">1위 작품</div>
-                        <div class="card">2위 작품</div>
-                        <div class="card">3위 작품</div>
+        <main id="content-area">
+            <!-- 2.jpg 참고: 홈/랭킹 화면 -->
+            <section id="view-home" class="view">
+                <div class="ranking-container">
+                    <h2>실시간 랭킹</h2>
+                    <div class="ranking-grid" id="ranking-list">
+                        <!-- 데이터가 여기 표시됩니다 -->
                     </div>
                 </div>
-                <div class="list-section">
-                    <h3>여러 작품 창 <span class="search-icon">🔍</span></h3>
-                    <ul class="novel-list">
-                        <li>작품 A - 판타지 (최신 업데이트)</li>
-                        <li>작품 B - 로맨스 판타지</li>
-                        <li>작품 C - 현대 판무</li>
-                        <li>작품 D - 무협</li>
-                    </ul>
+                <div class="novel-grid-section">
+                    <h3>최신 연재 작품 <span class="search-icon">🔍</span></h3>
+                    <div id="novel-list" class="grid-display"></div>
                 </div>
             </section>
 
-            <!-- 2. 서재 화면 -->
-            <section id="view-library" class="view">
-                <div class="library-grid">
-                    <div class="library-item">
-                        <div class="cover">표지</div>
-                        <div class="info">
-                            <p>며칠 전 읽은 소설</p>
-                            <div class="btn-group">
-                                <button class="btn-small">처음</button>
-                                <button class="btn-small">이어서</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="library-item">
-                        <div class="cover">표지</div>
-                        <div class="info">
-                            <p>1일 전 읽은 소설</p>
-                            <div class="btn-group">
-                                <button class="btn-small">처음</button>
-                                <button class="btn-small">이어서</button>
-                            </div>
-                        </div>
-                    </div>
+            <!-- 1.jpg 참고: 서재 화면 -->
+            <section id="view-library" class="view" style="display:none;">
+                <h2>내 서재</h2>
+                <div class="library-flex" id="my-library">
+                    <!-- 읽던 작품 목록 (1.jpg 구조) -->
                 </div>
             </section>
 
-            <!-- 3. 글 메뉴 화면 -->
-            <section id="view-write-menu" class="view">
-                <div class="write-menu-buttons">
-                    <button class="btn-large" onclick="switchView('view-editor')">글작성</button>
-                    <button class="btn-large">완결작 확인</button>
-                    <button class="btn-large full-width">이벤트 내역</button>
+            <!-- 3.jpg 참고: 글 관리 메뉴 -->
+            <section id="view-write-menu" class="view" style="display:none;">
+                <div class="write-hub">
+                    <button class="hub-btn" onclick="showView('editor')">새 글 작성</button>
+                    <button class="hub-btn">내 완결작</button>
+                    <button class="hub-btn full">이벤트 및 공지사항</button>
                 </div>
             </section>
 
-            <!-- 4. 글 작성 에디터 화면 -->
-            <section id="view-editor" class="view">
-                <div class="editor-toolbar">
-                    <button><b>B</b></button>
-                    <button><i>I</i></button>
-                    <button><u>U</u></button>
-                    <button><s>S</s></button>
-                    <button>색</button>
+            <!-- 4.jpg & 5.jpg & 6.jpg 참고: 에디터 및 등록 -->
+            <section id="view-editor" class="view" style="display:none;">
+                <div class="editor-header">
+                    <div class="tools"><b>B</b> <i>I</i> <u>U</u> <s>S</s> 🎨</div>
+                    <button class="submit-btn" onclick="saveNovel()">등록</button>
                 </div>
-                <div class="editor-title-row">
-                    <input type="text" placeholder="제목을 입력하세요:" class="title-input">
-                    <button class="btn-submit">등록</button>
-                </div>
-                <textarea class="editor-textarea" placeholder="이곳에 멋진 이야기를 작성해 보세요..."></textarea>
+                <input type="text" id="novel-title" placeholder="제목을 입력하세요 (6.jpg 참고)">
+                <textarea id="novel-content" placeholder="내용을 입력하세요..."></textarea>
             </section>
-
         </main>
-    </div>
 
-    <script src="script.js"></script>
+        <!-- 모바일 전용 하단바 (6.jpg 참고) -->
+        <nav class="mobile-nav">
+            <button onclick="showView('home')">🏠</button>
+            <button onclick="showView('library')">📚</button>
+            <button onclick="showView('write-menu')">✍️</button>
+        </nav>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
