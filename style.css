@@ -1,0 +1,186 @@
+/* 전체 기본 설정 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Malgun Gothic', sans-serif;
+    background-color: #f0f0f0; /* PC 배경색 */
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* 모바일 화면처럼 보이는 중앙 컨테이너 */
+#app-container {
+    width: 100%;
+    max-width: 480px; /* PC에서도 모바일 비율 유지 */
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* 상단 광고창 */
+.top-ad {
+    height: 60px;
+    background-color: #eeeeee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #333;
+    font-weight: bold;
+}
+
+/* 메인 콘텐츠 영역 (스크롤 가능) */
+#main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    padding-bottom: 70px; /* 하단 네비게이션 바 공간 확보 */
+}
+
+/* 화면(View) 숨김/보임 처리 */
+.view {
+    display: none;
+}
+.view.active {
+    display: block;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 홈 화면 디자인 */
+.ranking-cards {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.card {
+    flex: 1;
+    height: 100px;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.list-section {
+    border: 2px solid #333;
+    padding: 10px;
+    min-height: 200px;
+}
+.novel-list li {
+    margin: 10px 0;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+/* 서재 화면 디자인 */
+.library-item {
+    display: flex;
+    border: 2px solid #333;
+    margin-bottom: 15px;
+    padding: 10px;
+    gap: 15px;
+}
+.library-item .cover {
+    width: 60px;
+    height: 80px;
+    border: 1px solid #333;
+}
+.btn-small {
+    padding: 5px 10px;
+    border: 1px solid #333;
+    background: white;
+    cursor: pointer;
+}
+
+/* 글 메뉴 화면 디자인 */
+.write-menu-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.btn-large {
+    flex: 1 1 45%;
+    height: 100px;
+    border: 2px solid #333;
+    background: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-large.full-width {
+    flex: 1 1 100%;
+}
+
+/* 에디터 화면 디자인 */
+.editor-toolbar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #333;
+    padding: 5px;
+}
+.editor-toolbar button {
+    padding: 5px 10px;
+    background: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.editor-title-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.title-input {
+    flex: 1;
+    padding: 5px;
+    border: 2px solid #333;
+}
+.btn-submit {
+    padding: 5px 15px;
+    border: 2px solid #333;
+    background: #333;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.editor-textarea {
+    width: 100%;
+    height: 300px;
+    border: 2px solid #333;
+    padding: 10px;
+    resize: none; /* 크기 조절 방지 */
+}
+
+/* 하단 네비게이션 바 */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    display: flex;
+    border-top: 2px solid #333;
+}
+.bottom-nav button {
+    flex: 1;
+    background: none;
+    border: none;
+    border-right: 2px solid #333;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.bottom-nav button:last-child {
+    border-right: none;
+}
