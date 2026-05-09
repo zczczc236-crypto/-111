@@ -1,109 +1,50 @@
-/* 전역 설정 */
+:root { --main-border: 2px solid #000; --bg-gray: #f4f4f4; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Malgun Gothic', sans-serif; background-color: #f0f0f0; }
+body { font-family: sans-serif; background: #ddd; display: flex; justify-content: center; }
 
-/* 📱 모바일 기본 디자인 (Mobile First) */
-#app-container {
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+#app-container { 
+    width: 100%; max-width: 1200px; background: #fff; min-height: 100vh;
+    display: flex; flex-direction: column; position: relative;
 }
 
-.top-ad { height: 60px; background-color: #eee; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid #333; font-weight: bold; }
+/* 헤더 및 광고 */
+.main-header { border-bottom: var(--main-border); background: #fff; position: sticky; top: 0; z-index: 100; }
+.ad-banner { height: 50px; background: #eee; text-align: center; line-height: 50px; border-bottom: 1px solid #000; }
+.pc-nav { display: flex; padding: 10px; gap: 10px; justify-content: center; }
+.pc-nav button { padding: 8px 20px; border: var(--main-border); background: #fff; cursor: pointer; font-weight: bold; }
 
-/* 메인 콘텐츠 */
-#main-content {
-    flex: 1;
-    padding: 15px;
-    padding-bottom: 70px; /* 모바일 하단바 공간 */
+/* 뷰 관리 */
+.view { padding: 20px; }
+
+/* 2.jpg 홈 화면 그리드 */
+.ranking-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
+.grid-display { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+
+/* 1.jpg 서재 리스트 */
+.library-flex { display: flex; flex-direction: column; gap: 15px; }
+.lib-card { display: flex; border: var(--main-border); padding: 10px; gap: 15px; }
+.lib-thumb { width: 80px; height: 110px; background: #ccc; border: 1px solid #000; }
+
+/* 4.jpg 에디터 */
+.editor-header { display: flex; justify-content: space-between; margin-bottom: 10px; padding: 10px; background: #f9f9f9; border: var(--main-border); }
+#novel-title { width: 100%; padding: 15px; margin-bottom: 10px; border: var(--main-border); font-size: 1.2rem; }
+#novel-content { width: 100%; height: 500px; padding: 15px; border: var(--main-border); resize: none; }
+
+/* 📱 모바일 디자인 */
+@media (max-width: 1023px) {
+    #app-container { max-width: 480px; }
+    .pc-nav { display: none; }
+    .mobile-nav { 
+        position: fixed; bottom: 0; width: 100%; max-width: 480px; height: 60px; 
+        display: flex; background: #fff; border-top: var(--main-border);
+    }
+    .mobile-nav button { flex: 1; font-size: 20px; border: none; background: none; }
+    #content-area { padding-bottom: 80px; }
 }
 
-/* 화면 전환용 클래스 */
-.view { display: none; }
-.view.active { display: block; animation: fadeIn 0.3s; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-/* 네비게이션 (모바일: 하단 고정) */
-.nav-bar {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    background-color: white;
-    display: flex;
-    border-top: 2px solid #333;
-}
-.nav-btn { flex: 1; background: none; border: none; border-right: 2px solid #333; font-size: 16px; font-weight: bold; cursor: pointer; }
-.nav-btn:last-child { border-right: none; }
-.nav-btn:hover { background-color: #f9f9f9; }
-
-/* 내부 컴포넌트들 */
-.ranking-cards { display: flex; gap: 10px; margin: 10px 0 20px; }
-.card { flex: 1; height: 100px; border: 2px solid #333; display: flex; align-items: center; justify-content: center; background: #fff; }
-.list-section { border: 2px solid #333; padding: 15px; }
-.novel-list li { margin: 10px 0; border-bottom: 1px solid #ddd; padding-bottom: 8px; list-style: none;}
-
-.library-item { display: flex; border: 2px solid #333; margin-bottom: 15px; padding: 10px; gap: 15px; background: #fff;}
-.library-item .cover { width: 70px; height: 100px; border: 1px solid #333; background: #eee; display: flex; align-items: center; justify-content: center;}
-.library-item .info { flex: 1; display: flex; flex-direction: column; justify-content: center;}
-.btn-group { margin-top: 10px; display: flex; gap: 5px; }
-.btn-small { padding: 5px 10px; border: 1px solid #333; background: white; cursor: pointer; }
-
-.write-menu-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
-.btn-large { flex: 1 1 45%; height: 100px; border: 2px solid #333; background: white; font-size: 16px; font-weight: bold; cursor: pointer; }
-.btn-large.full-width { flex: 1 1 100%; }
-
-.editor-toolbar { display: flex; gap: 5px; margin-bottom: 10px; border: 2px solid #333; padding: 10px; background: #f9f9f9; }
-.editor-toolbar button { padding: 5px 10px; background: white; border: 1px solid #ccc; cursor: pointer; }
-.editor-title-row { display: flex; gap: 10px; margin-bottom: 10px; }
-.title-input { flex: 1; padding: 10px; border: 2px solid #333; font-size: 16px;}
-.btn-submit { padding: 10px 20px; border: 2px solid #333; background: #333; color: white; font-weight: bold; cursor: pointer; }
-.editor-textarea { width: 100%; height: 400px; border: 2px solid #333; padding: 15px; font-size: 16px; resize: vertical; }
-
-/* 💻 PC 데스크탑 디자인 (미디어 쿼리) */
-@media (min-width: 768px) {
-    #app-container {
-        max-width: 1000px; /* 모바일보다 훨씬 넓은 너비 */
-        margin: 40px auto; /* 위아래 여백 추가 */
-        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    }
-    
-    /* PC에서는 네비게이션을 상단 탭으로 변경 */
-    .nav-bar {
-        position: static; /* 하단 고정 해제 */
-        height: 60px;
-        border-top: none;
-        border-bottom: 2px solid #333;
-        background-color: #333;
-    }
-    .nav-btn {
-        color: white;
-        border-right: 1px solid #555;
-    }
-    .nav-btn:hover { background-color: #555; }
-
-    #main-content {
-        padding: 30px;
-        padding-bottom: 30px; /* 하단바가 없어졌으므로 여백 축소 */
-    }
-
-    /* 서재 화면을 2줄로 배치 */
-    .library-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* 반반씩 2칸 사용 */
-        gap: 20px;
-    }
-    .library-item { margin-bottom: 0; }
-
-    /* 글쓰기 버튼 넓게 배치 */
-    .btn-large { height: 150px; font-size: 20px; }
-    
-    /* 에디터 높이 확장 */
-    .editor-textarea { height: 600px; }
+/* 💻 PC 디자인 (Wide) */
+@media (min-width: 1024px) {
+    .mobile-nav { display: none; }
+    .view { padding: 40px; }
+    #novel-content { height: 700px; } /* PC에선 더 길게 */
 }
